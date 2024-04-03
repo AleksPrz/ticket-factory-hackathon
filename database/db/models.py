@@ -1,4 +1,5 @@
 from . import db
+from sqlalchemy import CheckConstraint
 
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,6 +16,12 @@ class Ticket(db.Model):
 
     wallet_url = db.Column(db.String(30))
     qr_url = db.Column(db.String(30))
+
+    __table_args__ = (
+        CheckConstraint(category.in_(['Completo', 'Inapam', 'Medio', 'Profesor']), name='check_category'),
+        CheckConstraint(payment_method.in_(['Efectivo', 'Tarjeta']), name='check_category'),
+        CheckConstraint(status.in_(['Cancelado', 'Abordado', 'Vigente', 'Caducado']), name='check_category'),
+    )
 
     trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'))
     trip = db.relationship('Trip', back_populates = "tickets")
