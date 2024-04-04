@@ -4,6 +4,7 @@ from . import db
 import qrcode
 from os.path import dirname
 
+
 def get_trip(data: dict) -> Trip:
 	"""
 	Checks if exists a trip with the given atributes
@@ -42,6 +43,7 @@ def get_trip(data: dict) -> Trip:
 		
 	return trip
 
+
 def create_qr(ticket: Ticket) -> str:
 	"""
 	Creates the qr image and saves it locally
@@ -56,8 +58,6 @@ def create_qr(ticket: Ticket) -> str:
 	qr.make(fit = True)
 
 	img = qr.make_image(fill = 'black', back_color = 'white')
-	
-    # TODO: change the paths
 
 	image_path = f"db/static/{ticket.id}.png"
 	img.save(image_path)

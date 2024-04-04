@@ -22,13 +22,13 @@ datos = {
 }
 
 def main():
-    test_post()
+    test_get()
 
 def test_get():
-    id = 1
-    url = f"{LOCALHOST}/get/ticket/{id}"
-    response = requests.get(url = url)
-    print(response.text)
+    for i in range(1, 5):
+        url = f"{LOCALHOST}/get/ticket/{i}"
+        response = requests.get(url = url)
+        print(response.text)
 
 def test_post():
     url = LOCALHOST + "/post/ticket"

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, send_from_directory
 from .models import Ticket, Trip, WebSubscription
 from . import db
 
@@ -6,6 +6,7 @@ from . import db
 # All the endpoints return JSON that represents the asked object, like tickets, trips and websuscriptions
 
 get = Blueprint('get', __name__)
+
 
 @get.route('/ticket/<int:ticket_id>', methods = ['GET'])
 def get_ticket_by_id(ticket_id):
@@ -31,6 +32,7 @@ def get_ticket_by_id(ticket_id):
     ticket_data["trip"] = trip_data
     return jsonify(ticket_data), 200
 
+
 @get.route('/trip/<int:trip_id>', methods = ['GET'])
 def get_trip_by_id(trip_id): 
     # Look for the trip in the database
@@ -51,6 +53,7 @@ def get_trip_by_id(trip_id):
     
     return jsonify(trip_data), 200 
 
+
 @get.route('/web-subscription/<int:web_subs_id>', methods = ['GET'])
 def get_web_subscription_by_id(web_subs_id):
     # Look for the suscription in the database
@@ -60,4 +63,18 @@ def get_web_subscription_by_id(web_subs_id):
         return jsonify({"status": "error", "message": "suscription not found"}), 404
 
     web_subs_data = web_subscription.__dict__
+    del web_subs_data['_sa_instance_state']
+
     return jsonify(web_subs_data), 200
+
+
+@get.route('/qr/<int:qr_id>', methods = ['GET'])
+def get_qr_img(qr_id):
+    # Look for the ticked with that id in the database
+    ticket = Ticket.query.filter_by(id = qr_id).first() 
+    
+    if not ticket:
+        return jsonify({"status": "error", "message": "image not found"}), 404
+
+    # Serve the static content
+    return send_from_directory('static', f'{qr_id}.png')
