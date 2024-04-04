@@ -7,7 +7,7 @@ class Ticket(db.Model):
     email = db.Column(db.String(70))
     seat_number = db.Column(db.String(10))
     category = db.Column(db.String(30))
-    status = db.Column(db.String(30))
+    status = db.Column(db.String(30), default='Vigente')
     billing_token = db.Column(db.String(30))
     total_payment = db.Column(db.Float)
     payment_method = db.Column(db.String(30))
@@ -19,8 +19,8 @@ class Ticket(db.Model):
 
     __table_args__ = (
         CheckConstraint(category.in_(['Completo', 'Inapam', 'Medio', 'Profesor']), name='check_category'),
-        CheckConstraint(payment_method.in_(['Efectivo', 'Tarjeta']), name='check_category'),
-        CheckConstraint(status.in_(['Cancelado', 'Abordado', 'Vigente', 'Caducado']), name='check_category'),
+        CheckConstraint(payment_method.in_(['Efectivo', 'Tarjeta']), name='check_payment_method'),
+        CheckConstraint(status.in_(['Cancelado', 'Abordado', 'Vigente', 'Caducado']), name='check_status'),
     )
 
     trip_id = db.Column(db.Integer, db.ForeignKey('trip.id'))

@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 ticket = Blueprint('ticket', __name__)
 
