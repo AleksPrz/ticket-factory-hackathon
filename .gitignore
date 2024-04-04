@@ -5,6 +5,8 @@ __pycache__/
 
 .venv/
 Pipfile.lock
+test/
+database/db/__pycache__/
 
 #Credentials
 .env

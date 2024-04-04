@@ -10,6 +10,7 @@ from .auxiliar_funcs import get_trip, create_qr
 
 post = Blueprint('post', __name__)
 
+
 @post.route('/ticket', methods = ['POST'])
 def add_ticket_to_db():
 	""" 
@@ -60,16 +61,8 @@ def add_ticket_to_db():
 	db.session.add(new_ticket) 
 	db.session.commit()
 
-	# Add the QR URL atribute
-	create_qr(new_ticket)
-	# new_ticket.qr_url = create_qr(new_ticket)
-	# db.session.commit()
+	# Add the QR URL atribute, which is the URL to view the image hosted in the server
+	new_ticket.qr_url = create_qr(new_ticket)
+	db.session.commit()
 
 	return jsonify({'status': 'sucess', 'message': 'ticket created'})
-
-""" @post.route('/web-suscription', methods = ['POST'])
-def add_web_subscription_to_db():
-	subscription = request.form.get('subscription')
-
-
-	return jsonify({'status': 'sucess', 'message': 'request detected'}) """
