@@ -1,8 +1,8 @@
-Aplicación - Ticket Factory
+<B>Aplicación - Ticket Factory</B>
 
 A continuación se describen los módulos de nuestra aplicación, así como los métodos más importantes de cada uno de ellos.
 
-Módulo: Wallet
+<B>Módulo: Wallet</B>
 
 Crear clase: Dados el ID de emisor y el sufijo de clase, se crea una clase 'Pass' y se retorna la ID única de la clase,
 la cual está conformada por los primeros dos atributos mencionados.
@@ -17,17 +17,17 @@ Parchear objeto: Modifica sólo ciertos campos de una instancia de una clase 'Pa
 Añadir mensaje al boleto: Dada una instancia de una clase 'Pass', se le puede enviar un mensaje pasando como argumento una
 lista que contenga los datos del mensaje a enviar.
 
-Módulo: Ticket Factory
+<B>Módulo: Ticket Factory</B>
 
 Crear boleto: Genera una URL para añadir el boleto a Wallet, se registra el viaje en la base de datos, se envía por correo
 el boleto y, finalmente, retorna la URL de la página del boleto web.
 
-Módulo: Ticket Web Page
+<B>Módulo: Ticket Web Page</B>
 
 Ver ticket: Recibe como argumento un ID de boleto; busca en la base de datos el boleto de ese ID y rellena la plantilla 
 HTML con el diseño y datos de dicho boleto.
 
-Módulo: Database
+<B>Módulo: Database</B>
 
 Modelos: Cada uno de los modelos definen la una relación o tabla de nuestra base de datos con sus respectivos campos, mien-
 tras que el conjunto de modelos definen la estructura general de la base de datos.
