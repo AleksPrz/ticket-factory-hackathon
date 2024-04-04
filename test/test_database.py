@@ -22,7 +22,7 @@ datos = {
 }
 
 def main():
-    test_get()
+    test_post()
 
 def test_get():
     id = 1

@@ -61,8 +61,9 @@ def add_ticket_to_db():
 	db.session.commit()
 
 	# Add the QR URL atribute
-	new_ticket.qr_url = create_qr(new_ticket)
-	db.session.commit()
+	create_qr(new_ticket)
+	# new_ticket.qr_url = create_qr(new_ticket)
+	# db.session.commit()
 
 	return jsonify({'status': 'sucess', 'message': 'ticket created'})
 

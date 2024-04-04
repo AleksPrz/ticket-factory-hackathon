@@ -2,6 +2,7 @@ from .models import Ticket, Trip, WebSubscription
 from datetime import datetime
 from . import db
 import qrcode
+from os.path import dirname
 
 def get_trip(data: dict) -> Trip:
 	"""
