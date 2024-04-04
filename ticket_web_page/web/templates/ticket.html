@@ -8,6 +8,7 @@
 </head>
 <body>
     <div id="ticket">
+        <div id="circle"></div>
         <img src="../static/logo.png" id="logo" alt="Logo de flecha amarilla">
         <p>{{ ticket.passenger_name }}</p>
         <p>Categoria: {{ ticket.category }}</p>
@@ -39,13 +40,16 @@
             <p class="strong">{{ ticket.trip.boarding_gate }}</p>
         </div>
         <p id="status">{{ ticket.status }}</p><br>
-        <img src="{{ ticket.qr_url }}" id="qr">
+        <img src="{{ ticket.qr_url }}" alt="qr" id="qr">
         <p>Servicio: {{ ticket.service_number }}</p>
         <p>Total: $ {{ ticket.total_payment }}</p>
         <p>Metodo de pago: {{ ticket.payment_method }}</p>
         <p>Operacion: {{ ticket.operation_number }}</p>
         <p>Token: {{ ticket.billing_token }}</p>
-        <p class="small">En caso de tener algun problema, comunicate al numero (+52) 477 710 00 60</p>
+        <a href="https://youtu.be/JjQoRSN5sc0?si=to1FLCQgQ3MBqJ0d" target="_blank"><img src="../static/esES_add_to_google_wallet_add-wallet-badge.svg" class="wallet"></a>
+        <a href=""><img src="../static/ESMX_Add_to_Apple_Wallet_RGB_101821.svg" class="wallet"></a>
+        <br>
+        <p class="small">En caso de tener algun problema, comunicate al numero (+52) 123 456 78 90</p>
         <p class="small">Consulte el siguiente link para ver <a href="https://info.primeraplus.com.mx/terminos-y-condiciones/" target="_blank">terminos y condiciones</a></p>
     </div>
 </body>

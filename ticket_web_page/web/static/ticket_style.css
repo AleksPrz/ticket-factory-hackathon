@@ -18,17 +18,21 @@ body {
     background-color: white;
     padding: 2vh;
     text-align: center;
-    border: 0.8vh solid yellow;
-    border-radius: 2vh;
+    border: 1.6vh solid yellow;
+    border-radius: 4vh;
+}
+
+img {
+    margin: 0.4vh;
 }
 
 p {
-    margin: 0.4vh;
+    margin-top: 1.2vh;
     font-size: 2vh;
 }
 
 #logo {
-    height: 8vh;
+    height: 5.2vh;
 }
 
 .strong {
@@ -64,4 +68,24 @@ a {
     background-color: yellow;
     border: 0.2vh solid black;
     font-size: 2.4vh;
+}
+
+.wallet {
+    width: 20vh;
+    margin: 1.2vh;
+}
+
+button {
+    border: 0;
+    background-color: none;
+}
+
+#circle {
+    background-color: yellow;
+    width: 8vh;
+    height: 8vh;
+    border-radius: 50%;
+    margin-top: -5.2vh;
+    margin-left: auto;
+    margin-right: auto;
 }
