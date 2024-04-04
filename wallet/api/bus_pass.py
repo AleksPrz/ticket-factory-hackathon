@@ -21,7 +21,7 @@ class Pass:
 
     def __init__(self):
         self.key_file_path = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS',
-                                            '../primera-plus-3ae47-e355045cae6b.json')
+                                            '../t1ck3tf4ct0ry-97c34b0abfa3.json')
         # Set up authenticated client
         self.auth()
 
@@ -267,40 +267,40 @@ class Pass:
                         "subheader": {
                             "defaultValue": {
                             "language": "es-ES",
-                            "value": f"{ticket["category"]}"
+                            "value": f"{ticket.get("category")}"
                             }
                         },
                         "header": {
                             "defaultValue": {
                             "language": "es-ES",
-                            "value": f"{ticket["passenger_name"]}"
+                            "value": f"{ticket.get("passenger_name")}"
                             }
                         },
                         "textModulesData": [
                             {
                             "id": "origen",
                             "header": "Origen",
-                            "body": f"{ticket["origin"]}"
+                            "body": f"{ticket.get("origin")}"
                             },
                             {
                             "id": "destino",
                             "header": "Destino",
-                            "body": f"{ticket["destination"]}"
+                            "body": f"{ticket.get("destination")}"
                             },
                             {
                             "id": "fecha",
                             "header": "Fecha",
-                            "body": f"{ticket["date"]}"
+                            "body": f"{ticket.get("date")}"
                             },
                             {
                             "id": "hora",
                             "header": "Hora",
-                            "body": f"{ticket["hour"]}"
+                            "body": f"{ticket.get("hour")}"
                             },
                             {
                             "id": "asiento",
                             "header": "Asiento",
-                            "body": f"{ticket["seat_number"]}"
+                            "body": f"{ticket.get("seat_number")}"
                             },
                             {
                             "id": "activo",
@@ -310,12 +310,12 @@ class Pass:
                             {
                             "id": "carril",
                             "header": "Carril",
-                            "body": f"{ticket["boarding_gate"]}"
+                            "body": f"{ticket.get("boarding_gate")}"
                             }
                         ],
                         "barcode": {
                             "type": "QR_CODE",
-                            "value": f"{ticket["qr_value"]}",
+                            "value": f"{ticket.get("qr_value")}",
                             "alternateText": ""
                         },
                         "hexBackgroundColor": "#ffd952",

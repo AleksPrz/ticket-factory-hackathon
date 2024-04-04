@@ -48,7 +48,8 @@ def get_trip_by_id(trip_id):
 
     #Delete the sqlalchemy value we don't need
     del trip_data['_sa_instance_state']
-    return jsonify(trip_data), 200
+    
+    return jsonify(trip_data), 200 
 
 @get.route('/web-subscription/<int:web_subs_id>', methods = ['GET'])
 def get_web_subscription_by_id(web_subs_id):

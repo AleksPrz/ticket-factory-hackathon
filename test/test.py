@@ -4,7 +4,7 @@ localhost = "http://127.0.0.1"
 
 issuer = "3388000000022334672"
 class_suffix = "hackathonclase"
-object_suffix = "hackatonobjeto"
+object_suffix = "hackatonobjeto1"
 
 
 ticket = {
@@ -19,11 +19,12 @@ ticket = {
         "boarding_gate" : "83",
         "qr_value" : "LOREMIPSUMDJDJDJD",    
         }
-data = {"issuer": issuer, "class_suffix": class_suffix, "object_suffix": object_suffix, "ticket":ticket}
+data = {"issuer_id": issuer, "class_suffix": class_suffix, "object_suffix": object_suffix, "ticket":ticket}
 
+class_data = {"issuer_id": issuer, "class_suffix": class_suffix}
 
-#response = requests.post(f"{localhost}:5003/create-class", {"issuer_id":issuer, "class_suffix": class_suffix})
-response = requests.post(f"{localhost}:5003/create-pass", {"issuer_id":issuer, "class_suffix": class_suffix, "object_suffix": object_suffix, "ticket": ticket})
+#response = requests.post(f"{localhost}:5003/create-class", json = class_data)
+response = requests.post(f"{localhost}:5003/create-pass", json = data)
 
 print(response.text)
 print(response.json())
