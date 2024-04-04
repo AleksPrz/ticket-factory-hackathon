@@ -53,7 +53,7 @@ def add_ticket_to_db():
 		payment_method = data.get("payment_method"),
 		total_payment = data.get("total_payment"),
 		billing_token = data.get("billing_token"),
-		#wallet_url = "www.com",
+		wallet_url = data.get("wallet_url"),
 		trip = trip
 	)
 
