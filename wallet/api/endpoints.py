@@ -14,7 +14,7 @@ def create_class():
     }
     """
 
-    data = request.form
+    data = request.json
     class_id = g_wallet.create_class(data.get("issuer_id"), data.get("class_suffix"))
     
     if not class_id:
@@ -44,11 +44,12 @@ def create_object():
         }
     }
     """
-    data = request.form
-    add_to_gw_url = g_wallet.create_object(data.get("issuer_id"), data.get("class_sufix"), data.get("object_suffix"), data.get("ticket"))
+    data = request.json
+    print(data)
+    #print(data["ticket"])
+    add_to_gw_url = g_wallet.create_object(data.get("issuer_id"), data.get("class_suffix"), data.get("object_suffix"), data.get("ticket"))
 
     if "https://pay.google.com/gp/v/save/" not in add_to_gw_url:
         return jsonify({"error": "Something went wrong"}), 500
-
+    
     return jsonify({"link": add_to_gw_url}), 200
-
