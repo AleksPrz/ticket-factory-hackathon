@@ -247,6 +247,7 @@ class Pass:
         new_object = {
                         "id": f"{issuer_id}.{object_suffix}",
                         "classId": f"{issuer_id}.{class_suffix}",
+                        "enableNotification": True,
                         "logo": {
                             "sourceUri": {
                             "uri": "https://res.cloudinary.com/dlrmqdoyf/image/upload/v1711679336/Marca_600_150_1_kgrfq0.png"
@@ -524,3 +525,43 @@ class Pass:
         print('Batch complete')
 
     # [END batch]
+    
+    # [START addMessageObject]
+    def add_object_message(self, issuer_id: str, object_suffix: str, header: str, body: str) -> str:
+        """Add a message to a pass object.
+
+        Args:
+            issuer_id (str): The issuer ID being used for this request.
+            object_suffix (str): Developer-defined unique ID for this pass object.
+            header (str): The message header.
+            body (str): The message body.
+
+        Returns:
+            The pass class ID: f"{issuer_id}.{class_suffix}"
+        """
+
+        # Check if the object exists
+        try:
+            response = self.client.genericobject().get(resourceId=f'{issuer_id}.{object_suffix}').execute()
+        except HttpError as e:
+            if e.status_code == 404:
+                print(f'Object {issuer_id}.{object_suffix} not found!')
+                return f'{issuer_id}.{object_suffix}'
+            else:
+                # Something else went wrong...
+                print(e.error_details)
+                return f'{issuer_id}.{object_suffix}'
+
+        response = self.client.genericobject().addmessage(
+            resourceId=f'{issuer_id}.{object_suffix}',
+            body={'message': {
+                'header': header,
+                'body': body
+            }}).execute()
+
+        print('Object addMessage response')
+        print(response)
+
+        return f'{issuer_id}.{object_suffix}'
+
+    # [END addMessageObject]
