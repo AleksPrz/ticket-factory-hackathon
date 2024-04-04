@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/ticket_style.css">
+    <title>Boleto</title>
+</head>
+<body>
+    <div id="ticket">
+        <img src="../static/logo.png" id="logo" alt="Logo de flecha amarilla">
+        <p>{{ ticket.passenger_name }}</p>
+        <p>Categoria: {{ ticket.category }}</p>
+        <div class="inline">
+            <div id="origin">
+                <p class="subtitle">origen:</p>
+                <p>{{ ticket.trip.origin }}</p>
+            </div>
+            <img src="../static/flecha.png" alt="Flecha">
+            <div id="destination">
+                <p class="subtitle">destino:</p>
+                <p>{{ ticket.trip.destination }}</p>
+            </div>
+        </div>
+        <div class="inline">
+            <p>Hora: {{ ticket.trip.hour }}</p>
+            <p class="subtitle">{{ ticket.trip.time }}</p>
+        </div>
+        <div class="inline">
+            <p>Fecha: {{ ticket.trip.date }}</p>
+            <p class="subtitle">{{ ticket.trip.day }}</p>
+        </div>
+        <div class="inline">
+            <p>Asiento: </p>
+            <p class="strong">{{ ticket.seat_number }}</p>
+        </div>
+        <div class="inline">
+            <p>Carril: </p>
+            <p class="strong">{{ ticket.trip.boarding_gate }}</p>
+        </div>
+        <p id="status">{{ ticket.status }}</p><br>
+        <img src="{{ ticket.qr_url }}" id="qr">
+        <p>Servicio: {{ ticket.service_number }}</p>
+        <p>Total: $ {{ ticket.total_payment }}</p>
+        <p>Metodo de pago: {{ ticket.payment_method }}</p>
+        <p>Operacion: {{ ticket.operation_number }}</p>
+        <p>Token: {{ ticket.billing_token }}</p>
+        <p class="small">En caso de tener algun problema, comunicate al numero (+52) 477 710 00 60</p>
+        <p class="small">Consulte el siguiente link para ver <a href="https://info.primeraplus.com.mx/terminos-y-condiciones/" target="_blank">terminos y condiciones</a></p>
+    </div>
+</body>
+</html>

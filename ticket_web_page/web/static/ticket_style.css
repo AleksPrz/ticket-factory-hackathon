@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-image: linear-gradient(yellow, white);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ticket {
+    background-color: white;
+    padding: 2vh;
+    text-align: center;
+    border: 0.8vh solid yellow;
+    border-radius: 2vh;
+}
+
+p {
+    margin: 0.4vh;
+    font-size: 2vh;
+}
+
+#logo {
+    height: 8vh;
+}
+
+.strong {
+    font-size: 2.4vh;
+    font-weight: bold;
+}
+
+.subtitle {
+    color: gray;
+    font-size: 1.6vh;
+}
+
+#qr {
+    width: 32vh;
+    margin: 0.4vh;
+}
+
+.inline > * {
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: orange;
+}
+
+.small {
+    font-size: 1.6vh;
+}
+
+#status {
+    display: inline-block;
+    background-color: yellow;
+    border: 0.2vh solid black;
+    font-size: 2.4vh;
+}
