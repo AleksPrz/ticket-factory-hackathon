@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from .bus_pass import Pass
 
-gw = Blueprint(__name__)
+gw = Blueprint('gw', __name__)
 g_wallet = Pass()
 
 @gw.route('/create-class', methods = ['POST'])
@@ -29,6 +29,7 @@ def create_object():
     input:
     {
     "issuer_id" : str
+    "class_sufix"
     "object_suffix" : str
     "ticket" : {
         "category" : str
@@ -38,12 +39,16 @@ def create_object():
         "date " : str (DD-MM-YY)
         "hour" : str (HH:MM)
         "seat_number" : str
-        "status" : str
         "boarding_gate" : str
         "qr_value" : str    
         }
     }
     """
     data = request.form
-    pass
+    add_to_gw_url = g_wallet.create_object(data.get("issuer_id"), data.get("class_sufix"), data.get("object_suffix"), data.get("ticket"))
+
+    if "https://pay.google.com/gp/v/save/" not in add_to_gw_url:
+        return jsonify({"error": "Something went wrong"}), 500
+
+    return jsonify({"link": add_to_gw_url}), 200
 

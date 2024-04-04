@@ -220,7 +220,7 @@ class Pass:
 
     # [START createObject]
     def create_object(self, issuer_id: str, class_suffix: str,
-                      object_suffix: str) -> str:
+                      object_suffix: str, ticket: dict) -> str:
         """Create an object.
 
         Args:
@@ -229,7 +229,7 @@ class Pass:
             object_suffix (str): Developer-defined unique ID for the pass object.
 
         Returns:
-            The pass object ID: f"{issuer_id}.{object_suffix}"
+            The "Add to Google Wallet" link
         """
 
         # Check if the object exists
@@ -267,55 +267,55 @@ class Pass:
                         "subheader": {
                             "defaultValue": {
                             "language": "es-ES",
-                            "value": "Adulto"
+                            "value": f"{ticket["category"]}"
                             }
                         },
                         "header": {
                             "defaultValue": {
                             "language": "es-ES",
-                            "value": "Alex McJacobs"
+                            "value": f"{ticket["passenger_name"]}"
                             }
                         },
                         "textModulesData": [
                             {
                             "id": "origen",
                             "header": "Origen",
-                            "body": "Campeche"
+                            "body": f"{ticket["origin"]}"
                             },
                             {
                             "id": "destino",
                             "header": "Destino",
-                            "body": "Guadalajara"
+                            "body": f"{ticket["destination"]}"
                             },
                             {
                             "id": "fecha",
                             "header": "Fecha",
-                            "body": "25-04-2024"
+                            "body": f"{ticket["date"]}"
                             },
                             {
                             "id": "hora",
                             "header": "Hora",
-                            "body": "12:57 MAÑANA"
+                            "body": f"{ticket["hour"]}"
                             },
                             {
                             "id": "asiento",
                             "header": "Asiento",
-                            "body": "12"
+                            "body": f"{ticket["seat_number"]}"
                             },
                             {
                             "id": "activo",
                             "header": "",
-                            "body": "ACTIVO"
+                            "body": f"ACTIVO"
                             },
                             {
                             "id": "carril",
                             "header": "Carril",
-                            "body": "59"
+                            "body": f"{ticket["boarding_gate"]}"
                             }
                         ],
                         "barcode": {
                             "type": "QR_CODE",
-                            "value": "BARCODE_VALUE",
+                            "value": f"{ticket["qr_value"]}",
                             "alternateText": ""
                         },
                         "hexBackgroundColor": "#ffd952",
