@@ -2,9 +2,12 @@ from flask import Flask
 from flask_cors import CORS
 
 def create_app():
-    app = Flask()
-    #TO HANDLE REQUESTS FROM EXTERNAL SOURCES
-    CORS(app, origins= "*") #origins = "*" IS NOT SECURE CAUSE WE ARE ALLOWING REQUESTS FROM EVERYWHERE
+    app = Flask(__name__)
+
+    # Handle requests from external sources
+    CORS(app, origins= "*")
+
+    from .viewer import viewer
+    app.register_blueprint(viewer)
     
     return app
-

@@ -1,9 +1,11 @@
 from flask import Blueprint, request, jsonify
-from .models import Ticket
+from .models import Ticket, Trip, WebSubscription
 # from datetime import datetime
 from . import db
 from .auxiliar_funcs import get_trip, create_qr
+import json
 
+LOCALHOST = "http://127.0.0.1"
 # Blueprint used to handle POST requests
 # It's used to add registers to the database, using the information received from the request
 # The endpoints return JSON that represents the result of the request
@@ -65,4 +67,31 @@ def add_ticket_to_db():
 	new_ticket.qr_url = create_qr(new_ticket)
 	db.session.commit()
 
-	return jsonify({'status': 'sucess', 'message': 'ticket created'})
+	#return jsonify({'status': 'sucess', 'message': 'ticket created'})
+	return f"{LOCALHOST}:5002/{new_ticket.id}"
+
+
+@post.route('/web-sub/<int:ticket_id>', methods = ['POST'])
+def register_web_sub(ticket_id):
+	#Converts the subscription object to plain text
+	
+	ticket = Ticket.query.filter_by(id = ticket_id).first()
+	
+	data = json.dumps(request.json)
+	print(data)
+	
+	subscription = ticket.web_subscription  #IF THE TICKET ALREADY HAD A SUSCRIPTION, DELETES IT
+	if subscription:
+		db.session.delete(subscription)
+		db.session.commit()
+
+		subscription = WebSubscription(data = data)
+		ticket.web_subscription = subscription
+
+		db.session.add(subscription)
+		db.session.commit()
+		return jsonify({'status': 'sucess', 'message': 'subscription saved'})
+	
+	else:
+		return jsonify({"error": "Not Found"}), 404
+

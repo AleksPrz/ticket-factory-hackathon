@@ -2,7 +2,7 @@ from .models import Ticket, Trip, WebSubscription
 from datetime import datetime
 from . import db
 import qrcode
-from os.path import dirname
+import os
 
 
 def get_trip(data: dict) -> Trip:
@@ -59,7 +59,11 @@ def create_qr(ticket: Ticket) -> str:
 
 	img = qr.make_image(fill = 'black', back_color = 'white')
 
-	image_path = f"db/static/{ticket.id}.png"
+	#image_path = f"db/static/{ticket.id}.png"
+	current_directory = os.path.dirname(__file__)
+
+	#Construir la ruta relativa al directorio actual
+	image_path = os.path.join(current_directory, "static", f"{ticket.id}.png")
 	img.save(image_path)
 
 	return f"http://127.0.0.1:5003/get/qr/{ticket.id}"

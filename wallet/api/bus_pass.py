@@ -527,8 +527,7 @@ class Pass:
     # [END batch]
     
     # [START addMessageObject]
-    def add_object_message(self, issuer_id: str, object_suffix: str, header: str, body: str,
-                           start_time: str, end_time: str) -> str:
+    def add_object_message(self, issuer_id: str, object_suffix: str, header: str, body: str) -> str:
         """Add a message to a pass object.
 
         Args:
@@ -563,18 +562,9 @@ class Pass:
             resourceId=f'{issuer_id}.{object_suffix}',
             body={'message': {
                 'header': header,
-                'body': body,
-                "displayInterval": {
-                    {
-                        "start": {
-                            "date": start_time
-                        },
-                        "end": {
-                            "date": end_time
-                        }
-                    }
+                'body': body
                 },
-            }}).execute()
+            }).execute()
 
         print('Object addMessage response')
         print(response)

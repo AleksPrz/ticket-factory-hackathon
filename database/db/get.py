@@ -7,6 +7,9 @@ from . import db
 
 get = Blueprint('get', __name__)
 
+#@get.route("/<str:image>.png")
+#def get_image(image):
+#    return get.send_static_file(f"{image}.png")
 
 @get.route('/ticket/<int:ticket_id>', methods = ['GET'])
 def get_ticket_by_id(ticket_id):

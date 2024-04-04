@@ -52,7 +52,7 @@ def create_object():
     if "https://pay.google.com/gp/v/save/" not in add_to_gw_url:
         return jsonify({"error": "Something went wrong"}), 500
     
-    return jsonify({"link": add_to_gw_url}), 200
+    return add_to_gw_url
 
 
 @gw.route('/send-message', methods = ['POST'])
@@ -62,6 +62,7 @@ def send_message():
     object_suffix = data["object_suffix"]
     header = data["header"]
     body = data["body"]
+    
 
     response = g_wallet.add_object_message(issuer_id, object_suffix, header, body)
 

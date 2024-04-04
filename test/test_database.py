@@ -1,10 +1,12 @@
 import requests
 
 LOCALHOST = "http://127.0.0.1:5003"
+DATABASE_URL = "http://127.0.0.1:5003"
+TICKET_FACTORY_URL = "http://127.0.0.1:5001/factory/create-ticket"
 
-datos = {
-    "email": "example2@you",
-    "passenger_name" : "PRUEBA FINAL",
+test_data = {
+    "email": "migtorruco@gmail.com",
+    "passenger_name" : "Miguel",
     "seat_number" : "12",
     "origin" : "Campeche",
     "destination" : "Guadalajara",
@@ -22,17 +24,18 @@ datos = {
 }
 
 def main():
-    test_get()
+    response = requests.post(url = TICKET_FACTORY_URL, json = test_data)
+    print(response.text)
 
 def test_get():
-    for i in range(1, 5):
-        url = f"{LOCALHOST}/get/ticket/{i}"
-        response = requests.get(url = url)
-        print(response.text)
+    id = 1
+    url = f"{LOCALHOST}/get/ticket/{id}"
+    response = requests.get(url = url)
+    print(response.text)
 
 def test_post():
     url = LOCALHOST + "/post/ticket"
-    response = requests.post(url = url, data = datos)
+    response = requests.post(url = url, data = test_data)
     print(response.text)
 
 if __name__ == '__main__':
