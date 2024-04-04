@@ -539,6 +539,12 @@ class Pass:
         Returns:
             The pass class ID: f"{issuer_id}.{class_suffix}"
         """
+        
+        self.credentials = Credentials.from_service_account_file(
+            self.key_file_path,
+            scopes=['https://www.googleapis.com/auth/wallet_object.issuer'])
+
+        self.client = build('walletobjects', 'v1', credentials=self.credentials)
 
         # Check if the object exists
         try:

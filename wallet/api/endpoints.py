@@ -53,3 +53,16 @@ def create_object():
         return jsonify({"error": "Something went wrong"}), 500
     
     return jsonify({"link": add_to_gw_url}), 200
+
+
+@gw.route('/send-message', methods = ['POST'])
+def send_message():
+    data = request.json
+    issuer_id = data["issuer_id"]
+    object_suffix = data["object_suffix"]
+    header = data["header"]
+    body = data["body"]
+
+    response = g_wallet.add_object_message(issuer_id, object_suffix, header, body)
+
+    return jsonify({"status" : "message sended!"})
