@@ -36,7 +36,7 @@ def create_object():
         "passenger_name" : str
         "origin" : str
         "destination" : str
-        "date " : str (DD-MM-YY)
+        "date" : str (DD-MM-YY)
         "hour" : str (HH:MM)
         "seat_number" : str
         "boarding_gate" : str

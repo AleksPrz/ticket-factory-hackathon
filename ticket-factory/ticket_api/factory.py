@@ -42,17 +42,17 @@ def create_ticket():
 			"passenger_name" : ticket_data["passenger_name"],
 			"origin" : ticket_data["origin"],
 			"destination" : ticket_data["destination"],
-			"date " : ticket_data["date"],
+			"date" : ticket_data["date"],
 			"hour" : ticket_data["hour"],
 			"seat_number" : ticket_data["seat_number"],
 			"boarding_gate" : ticket_data["boarding_gate"],
-			"qr_value" : f"{ticket_data["passenger_name"]}"    
+			"qr_value" : f"{ticket_data["passenger_name"]}//{ticket_data["category"]}"    
         }
 	}
 	
 	wallet_response = requests.post(url= f"{WALLET_API_URL}/create-pass" , json = wallet_data)
 	wallet_url = wallet_response.text
-	
+	print(wallet_url)
 	ticket_data['wallet_url'] = wallet_url
 
 	response_url = requests.post(url = f"{DATABASE_URL}/ticket", data = ticket_data)
