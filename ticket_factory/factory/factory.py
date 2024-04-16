@@ -1,3 +1,11 @@
+"""
+THIS WILL NO LONGER BE USED
+
+
+
+
+"""
+
 from flask import Blueprint, request
 from .emailing import send_email
 import requests
@@ -5,7 +13,7 @@ from . import ISSUER_ID, CLASS_SUFFIX
 
 factory = Blueprint('factory', __name__)
 
-DATABASE_URL = "http://127.0.0.1:5003/post"
+DATABASE_URL = "http://127.0.0.1:5001/post"
 WALLET_API_URL = "http://127.0.0.1:5004"
 
 @factory.route('/create-ticket', methods = ['POST'])

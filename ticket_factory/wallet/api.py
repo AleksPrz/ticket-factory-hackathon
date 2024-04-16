@@ -1,10 +1,9 @@
 from flask import Blueprint, request, jsonify
+from . import pass_builder, api
 from .bus_pass import Pass
 
-gw = Blueprint('gw', __name__)
-g_wallet = Pass()
 
-@gw.route('/create-class', methods = ['POST'])
+@api.route('/create-class', methods = ['POST'])
 def create_class():
     """
     input:
@@ -15,7 +14,7 @@ def create_class():
     """
 
     data = request.json
-    class_id = g_wallet.create_class(data.get("issuer_id"), data.get("class_suffix"))
+    class_id = pass_builder.create_class(data.get("issuer_id"), data.get("class_suffix"))
     
     if not class_id:
         return jsonify({'error' : "class could not be created"})
@@ -23,7 +22,7 @@ def create_class():
     return jsonify({"class_id": class_id}), 200
 
 
-@gw.route('/create-pass', methods = ['POST'])
+@api.route('/create-pass', methods = ['POST'])
 def create_object():
     """
     input:
@@ -47,7 +46,7 @@ def create_object():
     data = request.json
     print(data)
     #print(data["ticket"])
-    add_to_gw_url = g_wallet.create_object(data.get("issuer_id"), data.get("class_suffix"), data.get("object_suffix"), data.get("ticket"))
+    add_to_gw_url = pass_builder.create_object(data.get("issuer_id"), data.get("class_suffix"), data.get("object_suffix"), data.get("ticket"))
 
     if "https://pay.google.com/gp/v/save/" not in add_to_gw_url:
         return jsonify({"error": "Something went wrong"}), 500
@@ -55,7 +54,7 @@ def create_object():
     return add_to_gw_url
 
 
-@gw.route('/send-message', methods = ['POST'])
+@api.route('/send-message', methods = ['POST'])
 def send_message():
     data = request.json
     issuer_id = data["issuer_id"]
@@ -64,6 +63,6 @@ def send_message():
     body = data["body"]
     
 
-    response = g_wallet.add_object_message(issuer_id, object_suffix, header, body)
+    response = pass_builder.add_object_message(issuer_id, object_suffix, header, body)
 
     return jsonify({"status" : "message sended!"})

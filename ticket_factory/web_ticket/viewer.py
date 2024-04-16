@@ -1,12 +1,11 @@
-from flask import Blueprint, request, render_template, jsonify
+from . import web_ticket
+from flask import request, render_template, jsonify
 import requests
 import json
 
-DATABASE_URL = "http://127.0.0.1:5003"
+DATABASE_URL = "http://127.0.0.1:5001"
 
-viewer = Blueprint('viewer', __name__, static_folder="static")
-
-@viewer.route('/<int:ticket_id>', methods = ['POST', 'GET'])
+@web_ticket.route('/<int:ticket_id>', methods = ['POST', 'GET'])
 def view_ticket(ticket_id):
     response = requests.get(f"{DATABASE_URL}/get/ticket/{ticket_id}")
     ticket = json.loads(response.text)
@@ -19,6 +18,6 @@ def view_ticket(ticket_id):
         return render_template("ticket.html", ticket = ticket, url = url)
 
 
-@viewer.route('/service_worker.js', methods=['GET'])
+@web_ticket.route('/service_worker.js', methods=['GET'])
 def get_service_worker():
-    return viewer.send_static_file('service_worker.js')
+    return web_ticket.send_static_file('service_worker.js')
