@@ -363,7 +363,7 @@ class Pass:
     # [END createObject]
 
     # [START patchObject]
-    def patch_object(self, issuer_id: str, object_suffix: str) -> str:
+    def patch_object(self, issuer_id: str, object_suffix: str, patch_body) -> str:
         """Patch an object.
 
         Args:
@@ -390,8 +390,7 @@ class Pass:
         # Object exists
         existing_object = response
 
-        # Patch the object by adding a link
-        patch_body = {}
+        # Patch the object by changing the hour
         new_link = {
             'uri': 'https://developers.google.com/wallet',
             'description': 'New link description'
@@ -417,6 +416,63 @@ class Pass:
         return f'{issuer_id}.{object_suffix}'
 
     # [END patchObject]
+    
+    # [START changeTicketTime]
+    def change_ticket_time(self, issuer_id: str, object_suffix: str, new_time: str) -> str:
+        """Change the time of the ticket.
+
+        Args:
+            issuer_id (str): The issuer ID of the ticket.
+            object_suffix (str): The suffix of the ticket object.
+            new_time (str): The new time to set for the ticket.
+
+        Returns:
+            str: The ID of the modified ticket object.
+        """
+        
+        patch_body = {
+            "textModulesData": [
+                {
+                    "id": "hora",
+                    "body": new_time
+                }
+            ]
+        }
+
+        try:
+            response = self.patch_object(issuer_id, object_suffix, patch_body).execute()
+            print('Ticket time updated successfully')
+            return response
+        except Exception as e:
+            print(f'Failed to update ticket time: {str(e)}')
+            return ""
+        
+    # [END changeTicketTime]
+        
+    # [START changeTripStatus]
+    def change_trip_status(self, issuer_id: str, object_suffix: str) -> str:
+        """Change the status of the trip.
+
+        Args:
+            issuer_id (str): The issuer ID of the trip.
+            object_suffix (str): The suffix of the trip object.
+
+        Returns:
+            str: The ID of the modified trip object.
+        """
+
+        patch_body = {
+            "status": "some status"
+        }
+
+        try:
+            response = self.patch_object(issuer_id, object_suffix, patch_body)
+            return response
+        except Exception as e:
+            print(f'Failed to update trip status: {str(e)}')
+            return ""
+        
+    # [END changeTripStatus]
 
     # [START batch]
     def batch_create_objects(self, issuer_id: str, class_suffix: str):

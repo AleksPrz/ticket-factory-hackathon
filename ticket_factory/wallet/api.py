@@ -39,7 +39,7 @@ def create_object():
         "hour" : str (HH:MM)
         "seat_number" : str
         "boarding_gate" : str
-        "qr_value" : str    
+        "qr_value" : str
         }
     }
     """
@@ -66,3 +66,41 @@ def send_message():
     response = pass_builder.add_object_message(issuer_id, object_suffix, header, body)
 
     return jsonify({"status" : "message sended!"})
+
+@api.route('/update-ticket-hour', methods=['POST'])
+def send_message():
+    data = request.json
+    issuer_id = data["issuer_id"]
+    object_suffix = data["object_suffix"]
+    header = data["header"]
+    body = data["body"]
+
+    # Cambiar la hora del boleto antes de enviar el mensaje
+    new_time = data["hour"]
+    response = Pass.change_ticket_time(issuer_id, object_suffix, new_time)
+
+    if response:
+        # Envía el mensaje
+        response = pass_builder.add_object_message(issuer_id, object_suffix, header, body)
+        return jsonify({"status": "updated!"})
+    else:
+        return jsonify({"error": "failed to update ticket time"})
+
+@api.route('/update-ticket-status', methods=['POST'])
+def send_message():
+    data = request.json
+    issuer_id = data["issuer_id"]
+    object_suffix = data["object_suffix"]
+    header = data["header"]
+    body = data["body"]
+
+    # Cambiar el status del boleto antes de enviar el mensaje
+    new_status = data["status"]
+    response = Pass.change_ticket_time(issuer_id, object_suffix, new_status)
+
+    if response:
+        # Envía el mensaje
+        response = pass_builder.add_object_message(issuer_id, object_suffix, header, body)
+        return jsonify({"status": "updated!"})
+    else:
+        return jsonify({"error": "failed to update ticket status"})
