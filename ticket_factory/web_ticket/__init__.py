@@ -1,3 +1,1 @@
-from flask import Blueprint
-
-web_ticket = Blueprint('web_ticket',__name__)
+from .viewer import web_ticket as web_ticket

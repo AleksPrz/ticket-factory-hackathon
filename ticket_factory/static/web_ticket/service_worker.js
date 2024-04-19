@@ -32,9 +32,8 @@ async function saveSubscription(subscription, url) {
 to a push service */
 
 self.addEventListener('message', async function(event) {
-    // Manejar el mensaje recibido desde la página web principal
+    // Receives the specific endpoint for save the subscription of the current ticket
     const url = event.data.url_data;
-    // Acceder al dato enviado desde la página web principal
     
     console.log('Datos recibidos en el Service Worker:', url);
     // This returns a PushSubscription object
