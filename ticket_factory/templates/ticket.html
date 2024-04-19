@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/ticket_style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'web_ticket/ticket_style.css') }}">
     <title>Boleto</title>
 </head>
 <body>
     <div id="ticket">
         <div id="circle"></div>
-        <img src="../static/logo.png" id="logo" alt="Logo de flecha amarilla">
+        <img src="{{ url_for('static', filename = 'web_ticket/logo.png') }}" id="logo" alt="Logo de flecha amarilla">
         <p>{{ ticket.passenger_name }}</p>
         <p>Categoria: {{ ticket.category }}</p>
         <div class="inline">
@@ -17,7 +17,7 @@
                 <p class="subtitle">origen:</p>
                 <p>{{ ticket.trip.origin }}</p>
             </div>
-            <img src="../static/flecha.png" alt="Flecha">
+            <img src="{{ url_for('static', filename = 'web_ticket/flecha.png') }}" alt="Flecha">
             <div id="destination">
                 <p class="subtitle">destino:</p>
                 <p>{{ ticket.trip.destination }}</p>
@@ -46,13 +46,13 @@
         <p>Metodo de pago: {{ ticket.payment_method }}</p>
         <p>Operacion: {{ ticket.operation_number }}</p>
         <p>Token: {{ ticket.billing_token }}</p>
-        <a href="{{ ticket.wallet_url }}" target="_blank"><img src="../static/esES_add_to_google_wallet_add-wallet-badge.svg" class="wallet"></a>
-        <a href=""><img src="../static/ESMX_Add_to_Apple_Wallet_RGB_101821.svg" class="wallet"></a>
+        <a href="{{ ticket.wallet_url }}" target="_blank"><img src="{{ url_for('static', filename = 'web_ticket/esES_add_to_google_wallet_add-wallet-badge.svg') }}" class="wallet"></a>
+        <a href=""><img src="{{ url_for('static', filename = 'web_ticket/ESMX_Add_to_Apple_Wallet_RGB_101821.svg') }}" class="wallet"></a>
         <br>
         <p class="small">En caso de tener algun problema, comunicate al numero (+52) 123 456 78 90</p>
         <p class="small">Consulte el siguiente link para ver <a href="https://info.primeraplus.com.mx/terminos-y-condiciones/" target="_blank">terminos y condiciones</a></p>
     </div>
-    <script src = "../../static/viewer/main.js"></script>
+    <script src = "{{ url_for('static', filename = 'web_ticket/main.js') }}"></script>
     <script>
         main("{{ url }}");
     </script>
