@@ -1,7 +1,9 @@
 from flask import Blueprint, request, jsonify
-from . import pass_builder, api
 from .bus_pass import Pass
 
+pass_builder = Pass()
+
+api = Blueprint('api', __name__)
 
 @api.route('/create-class', methods = ['POST'])
 def create_class():
@@ -62,45 +64,47 @@ def send_message():
     header = data["header"]
     body = data["body"]
     
-
     response = pass_builder.add_object_message(issuer_id, object_suffix, header, body)
 
     return jsonify({"status" : "message sended!"})
 
-@api.route('/update-ticket-hour', methods=['POST'])
-def send_message():
-    data = request.json
-    issuer_id = data["issuer_id"]
-    object_suffix = data["object_suffix"]
-    header = data["header"]
-    body = data["body"]
 
-    # Cambiar la hora del boleto antes de enviar el mensaje
-    new_time = data["hour"]
-    response = Pass.change_ticket_time(issuer_id, object_suffix, new_time)
+@api.route('/update-hour', methods=['POST'])
+def update_hour():
+    """
+    input:
+    {
+    "issuer_id" : str
+    "object_suffix" : str
+    "hour" : str
+    }
+    """
+    data : dict = request.json
+    issuer_id = data.get("issuer_id")
+    object_suffix = data.get("object_suffix")
+    new_hour = data.get("hour")
 
-    if response:
-        # Envía el mensaje
-        response = pass_builder.add_object_message(issuer_id, object_suffix, header, body)
-        return jsonify({"status": "updated!"})
-    else:
-        return jsonify({"error": "failed to update ticket time"})
+    response = pass_builder.update_hour(issuer_id, object_suffix, new_hour)
 
-@api.route('/update-ticket-status', methods=['POST'])
-def send_message():
-    data = request.json
-    issuer_id = data["issuer_id"]
-    object_suffix = data["object_suffix"]
-    header = data["header"]
-    body = data["body"]
+    return jsonify({"status": "Updated"})
 
-    # Cambiar el status del boleto antes de enviar el mensaje
-    new_status = data["status"]
-    response = Pass.change_ticket_time(issuer_id, object_suffix, new_status)
 
-    if response:
-        # Envía el mensaje
-        response = pass_builder.add_object_message(issuer_id, object_suffix, header, body)
-        return jsonify({"status": "updated!"})
-    else:
-        return jsonify({"error": "failed to update ticket status"})
+@api.route('/update-status', methods=['POST'])
+def update_status():
+    """
+    input:
+    {
+    "issuer_id" : str
+    "object_suffix" : str
+    "status" : str
+    }
+    """
+
+    data: dict = request.json
+    issuer_id = data.get("issuer_id")
+    object_suffix = data.get("object_suffix")
+    new_status = data.get("status")
+
+    response = pass_builder.update_status(issuer_id, object_suffix, new_status)
+
+    return jsonify({"status": "Updated"})

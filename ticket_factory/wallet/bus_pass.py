@@ -126,7 +126,7 @@ class Pass:
                                 "firstValue": {
                                     "fields": [
                                     {
-                                        "fieldPath": "object.textModulesData['activo']"
+                                        "fieldPath": "object.textModulesData['estado']"
                                     }
                                     ]
                                 }
@@ -304,8 +304,8 @@ class Pass:
                             "body": f"{ticket.get("seat_number")}"
                             },
                             {
-                            "id": "activo",
-                            "header": "",
+                            "id": "estado",
+                            "header": "Estado",
                             "body": f"ACTIVO"
                             },
                             {
@@ -363,12 +363,14 @@ class Pass:
     # [END createObject]
 
     # [START patchObject]
-    def patch_object(self, issuer_id: str, object_suffix: str, patch_body) -> str:
+    def patch_object(self, issuer_id: str, object_suffix: str, new_content: dict, index: int) -> str:
         """Patch an object.
 
         Args:
             issuer_id (str): The issuer ID being used for this request.
             object_suffix (str): Developer-defined unique ID for the pass object.
+            new_content (dict): Content that will be added to the ticket.
+            index (int): Index of the data to be changed within the "textModulesData" list.
 
         Returns:
             The pass object ID: f"{issuer_id}.{object_suffix}"
@@ -390,21 +392,13 @@ class Pass:
         # Object exists
         existing_object = response
 
-        # Patch the object by changing the hour
-        new_link = {
-            'uri': 'https://developers.google.com/wallet',
-            'description': 'New link description'
-        }
+        patch_body = {}
 
-        # Check if the class has already been patched before
-        if existing_object.get('linksModuleData'):
-            patch_body['linksModuleData'] = existing_object['linksModuleData']
-        # Patch the class for the first time
-        else:
-            patch_body['linksModuleData'] = {'uris': []}
+        #Gets the ticket data to change it
+        patch_body['textModulesData'] = existing_object['textModulesData'] 
 
-        # Add the new link to the class
-        patch_body['linksModuleData']['uris'].append(new_link)
+        #Applies the change
+        patch_body["textModulesData"][index] = new_content
     
         response = self.client.genericobject().patch(
             resourceId=f'{issuer_id}.{object_suffix}',
@@ -417,8 +411,8 @@ class Pass:
 
     # [END patchObject]
     
-    # [START changeTicketTime]
-    def change_ticket_time(self, issuer_id: str, object_suffix: str, new_time: str) -> str:
+    # [START updateHour]
+    def update_hour(self, issuer_id: str, object_suffix: str, new_hour: str) -> str:
         """Change the time of the ticket.
 
         Args:
@@ -429,50 +423,39 @@ class Pass:
         Returns:
             str: The ID of the modified ticket object.
         """
-        
-        patch_body = {
-            "textModulesData": [
-                {
+        new_content = {
                     "id": "hora",
-                    "body": new_time
-                }
-            ]
-        }
-
-        try:
-            response = self.patch_object(issuer_id, object_suffix, patch_body).execute()
-            print('Ticket time updated successfully')
-            return response
-        except Exception as e:
-            print(f'Failed to update ticket time: {str(e)}')
-            return ""
+                    "header": "Hora",
+                    "body": new_hour
+                    }
         
-    # [END changeTicketTime]
+        return self.patch_object(issuer_id, object_suffix, new_content, index = 3)
+        
+    # [END updateHour]
         
     # [START changeTripStatus]
-    def change_trip_status(self, issuer_id: str, object_suffix: str) -> str:
+    def update_status(self, issuer_id: str, object_suffix: str, new_status: str) -> str:
         """Change the status of the trip.
 
         Args:
             issuer_id (str): The issuer ID of the trip.
             object_suffix (str): The suffix of the trip object.
+            new_status (str): The new status of the ticket
 
         Returns:
-            str: The ID of the modified trip object.
+            str: The ID of the modified ticket object.
         """
 
-        patch_body = {
-            "status": "some status"
-        }
+        new_content = {
+                    "id": "estado",
+                    "header": "Estado",
+                    "body": new_status
+                    }
 
-        try:
-            response = self.patch_object(issuer_id, object_suffix, patch_body)
-            return response
-        except Exception as e:
-            print(f'Failed to update trip status: {str(e)}')
-            return ""
-        
-    # [END changeTripStatus]
+
+        return self.patch_object(issuer_id, object_suffix, new_content, index = 5)
+
+    # [END update_status]
 
     # [START batch]
     def batch_create_objects(self, issuer_id: str, class_suffix: str):

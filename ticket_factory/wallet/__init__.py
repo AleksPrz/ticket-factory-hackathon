@@ -1,6 +1,4 @@
 from .bus_pass import Pass
-from flask import Blueprint
+from .api import api as api #Import the blueprint
 
-pass_builder = Pass()
-
-api = Blueprint('api', __name__)
+pass_builder = Pass() #Creates the object that allows to manage the wallet passes
