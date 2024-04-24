@@ -21,7 +21,7 @@ def create_class():
 
     if issuer_id == None or class_suffix == None:
         print("Missing data")
-        return jsonify({'error: Missing data'}), 400
+        return jsonify({'error': 'Missing data'}), 400
     
 
     try:
@@ -40,18 +40,25 @@ def create_object():
     input:
     {
     "issuer_id" : str
-    "class_sufix"
+    "class_suffix" : str
     "object_suffix" : str
     "ticket" : {
         "category" : str
         "passenger_name" : str
-        "origin" : str
-        "destination" : str
-        "date" : str (DD-MM-YY)
-        "hour" : str (HH:MM)
         "seat_number" : str
-        "boarding_gate" : str
-        "qr_value" : str
+        "billing_token" : str,
+        "total_payment" : dbl,
+        "payment_method" : str,
+        "operation_number" : int,
+        "service_number" : int,
+        "trip": {
+            "origin" : str
+            "destination" : str
+            "date" : str (DD-MM-YY)
+            "time" : srr
+            "hour" : str (HH:MM)
+            "boarding_gate" : str
+            }
         }
     }
     """
@@ -64,7 +71,7 @@ def create_object():
 
     if None in [issuer_id, class_suffix, object_suffix, ticket]:
         print("Missing data")
-        return jsonify({'error: Missing data'}), 400
+        return jsonify({'error': 'Missing data'}), 400
 
     try:
         add_to_gw_url = pass_builder.create_object(issuer_id, class_suffix, object_suffix, ticket)
@@ -98,7 +105,7 @@ def send_message():
     #Check that all data is received
     if None in [issuer_id, object_suffix, body, header]:
         print("Missing data")
-        return jsonify({'error: Missing data'}), 400
+        return jsonify({'error': 'Missing data'}), 400
 
     try:
         pass_builder.add_object_message(issuer_id, object_suffix, header, body)
@@ -130,7 +137,7 @@ def update_hour():
     #Check that all data is received
     if None in [issuer_id, object_suffix, new_hour]:
         print("Missing data")
-        return jsonify({'error: Missing data'}), 400
+        return jsonify({'error': 'Missing data'}), 400
     
     try:
         pass_builder.update_hour(issuer_id, object_suffix, new_hour)
@@ -161,7 +168,7 @@ def update_status():
     #Check that all data is received
     if None in [issuer_id, object_suffix, new_status]:
         print("Missing data")
-        return jsonify({'error: Missing data'}), 400
+        return jsonify({'error': 'Missing data'}), 400
 
     try:
         pass_builder.update_status(issuer_id, object_suffix, new_status)

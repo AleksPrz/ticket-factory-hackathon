@@ -178,6 +178,8 @@ class Pass:
         else:
             raise Exception(f'Object {issuer_id}.{object_suffix} already exists!')
 
+        trip : dict = ticket.get("trip")
+
         new_object = {
                         "id": f"{issuer_id}.{object_suffix}",
                         "classId": f"{issuer_id}.{class_suffix}",
@@ -196,7 +198,7 @@ class Pass:
                         "cardTitle": {
                             "defaultValue": {
                             "language": "es-ES",
-                            "value": "Grupo Flecha Amarilla"
+                            "value": "Ticket Factory"
                             }
                         },
                         "subheader": {
@@ -215,22 +217,22 @@ class Pass:
                             {
                             "id": "origen",
                             "header": "Origen",
-                            "body": f"{ticket.get("origin")}"
+                            "body": f"{trip.get("origin")}"
                             },
                             {
                             "id": "destino",
                             "header": "Destino",
-                            "body": f"{ticket.get("destination")}"
+                            "body": f"{trip.get("destination")}"
                             },
                             {
                             "id": "fecha",
                             "header": "Fecha",
-                            "body": f"{ticket.get("date")}"
+                            "body": f"{trip.get("date")}"
                             },
                             {
                             "id": "hora",
                             "header": "Hora",
-                            "body": f"{ticket.get("hour")}"
+                            "body": f"{trip.get("hour")} {trip.get("time")}"
                             },
                             {
                             "id": "asiento",
@@ -245,12 +247,37 @@ class Pass:
                             {
                             "id": "carril",
                             "header": "Carril",
-                            "body": f"{ticket.get("boarding_gate")}"
+                            "body": f"{trip.get("boarding_gate")}"
+                            },
+                            {#NEW MODULES
+                            "id": "servicio",
+                            "header": "No. de servicio",
+                            "body": f"{ticket.get("service_number")}"
+                            },
+                            {
+                            "id": "operacion",
+                            "header": "No. de operacion",
+                            "body": f"{ticket.get("operation_number")}"
+                            },
+                            {
+                            "id": "total",
+                            "header": "Total",
+                            "body": f"$ {ticket.get("total_payment")}"
+                            },
+                            {
+                            "id": "pago",
+                            "header": "Método de pago",
+                            "body": f"{ticket.get("payment_method")}"
+                            },
+                            {
+                            "id": "token",
+                            "header": "Token de facturación",
+                            "body": f"{ticket.get("billing_token")}"
                             }
                         ],
                         "barcode": {
                             "type": "QR_CODE",
-                            "value": f"{ticket.get("qr_value")}",
+                            "value": f'{{"passenger_name": "{ticket.get("passenger_name")}", "category": "{ticket.get("category")}"}}',
                             "alternateText": ""
                         },
                         "hexBackgroundColor": "#ffd952",
