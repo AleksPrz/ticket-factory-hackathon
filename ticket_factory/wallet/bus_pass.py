@@ -154,66 +154,6 @@ class Pass:
 
     # [END createClass]
 
-    # [START patchClass]
-    def patch_class(self, issuer_id: str, class_suffix: str) -> str:
-        """Patch a class.
-
-        The PATCH method supports patch semantics.
-
-        Args:
-            issuer_id (str): The issuer ID being used for this request.
-            class_suffix (str): Developer-defined unique ID for this pass class.
-
-        Returns:
-            The pass class ID: f"{issuer_id}.{class_suffix}"
-        """
-
-        # Check if the class exists
-        try:
-            response = self.client.genericclass().get(resourceId=f'{issuer_id}.{class_suffix}').execute()
-        except HttpError as e:
-            if e.status_code == 404:
-                raise Exception(f'Class {issuer_id}.{class_suffix} not found!')
-            else:
-                # Something else went wrong...
-                raise Exception(f"{e.error_details}")
-        # There is no 'else' statement - that means that the class HAS to exist in order to patch it!!
-
-        # Class exists
-        existing_class = response
-
-        # [EXAMPLE] Patch the class by adding a link
-        patch_body = {}
-        new_link = {
-            'uri': 'https://developers.google.com/wallet',
-            'description': 'Homepage description'
-        }
-
-        # Check if the class has already been patched before
-        if existing_class.get('linksModuleData'):
-            patch_body['linksModuleData'] = existing_class.get(
-                'linksModuleData')
-        # Patch the class for the first time
-        else:
-            patch_body['linksModuleData'] = {'uris': []}
-
-        # Add the new link to the class
-        patch_body['linksModuleData']['uris'].append(new_link)
-
-        # Note: reviewStatus must be 'UNDER_REVIEW' or 'DRAFT' for patches
-        patch_body['reviewStatus'] = 'UNDER_REVIEW'
-
-        response = self.client.genericclass().patch(
-            resourceId=f'{issuer_id}.{class_suffix}',
-            body=patch_body).execute()
-
-        print('Class patch response')
-        print(response)
-
-        return f'{issuer_id}.{class_suffix}'
-
-    # [END patchClass]
-
     # [START createObject]
     def create_object(self, issuer_id: str, class_suffix: str,
                       object_suffix: str, ticket: dict) -> str:
