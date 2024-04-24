@@ -16,10 +16,20 @@ def create_class():
     """
 
     data = request.json
-    class_id = pass_builder.create_class(data.get("issuer_id"), data.get("class_suffix"))
+    issuer_id = data.get('issuer_id')
+    class_suffix = data.get('class_suffix')
+
+    if issuer_id == None or class_suffix == None:
+        print("Missing data")
+        return jsonify({'error: Missing data'}), 400
     
-    if not class_id:
-        return jsonify({'error' : "class could not be created"})
+
+    try:
+        class_id = pass_builder.create_class(issuer_id, class_suffix)
+    except Exception as e:
+        error_message = e.args[0]
+        print(error_message)
+        return jsonify({'error': error_message}), 500
     
     return jsonify({"class_id": class_id}), 200
 
@@ -45,31 +55,62 @@ def create_object():
         }
     }
     """
-    data = request.json
-    print(data)
-    #print(data["ticket"])
-    add_to_gw_url = pass_builder.create_object(data.get("issuer_id"), data.get("class_suffix"), data.get("object_suffix"), data.get("ticket"))
 
-    if "https://pay.google.com/gp/v/save/" not in add_to_gw_url:
-        return jsonify({"error": "Something went wrong"}), 500
+    data : dict = request.json
+    issuer_id = data.get('issuer_id')
+    class_suffix = data.get('class_suffix')
+    object_suffix = data.get('object_suffix')
+    ticket : dict = data.get('ticket')
+
+    if None in [issuer_id, class_suffix, object_suffix, ticket]:
+        print("Missing data")
+        return jsonify({'error: Missing data'}), 400
+
+    try:
+        add_to_gw_url = pass_builder.create_object(issuer_id, class_suffix, object_suffix, ticket)
+    except Exception as e:
+        error_message = e.args[0]
+        print(error_message)
+        return jsonify({'error': error_message}), 500
+
     
-    return add_to_gw_url
+    return jsonify({'link' : add_to_gw_url})
 
 
 @api.route('/send-message', methods = ['POST'])
 def send_message():
-    data = request.json
-    issuer_id = data["issuer_id"]
-    object_suffix = data["object_suffix"]
-    header = data["header"]
-    body = data["body"]
+    """
+    input:
+    {
+    issuer_id: str
+    object_suffix: str
+    header: str
+    body: str
+    }
+    """
+
+    data : dict = request.json
+    issuer_id = data.get('issuer_id')
+    object_suffix = data.get('object_suffix')
+    header = data.get('header')
+    body = data.get('body')
     
-    response = pass_builder.add_object_message(issuer_id, object_suffix, header, body)
+    #Check that all data is received
+    if None in [issuer_id, object_suffix, body, header]:
+        print("Missing data")
+        return jsonify({'error: Missing data'}), 400
 
-    return jsonify({"status" : "message sended!"})
+    try:
+        pass_builder.add_object_message(issuer_id, object_suffix, header, body)
+    except Exception as e:
+        error_message = e.args[0]
+        print(error_message)
+        return jsonify({'error': error_message}), 500
+
+    return jsonify({"status" : "message sended!"}), 200
 
 
-@api.route('/update-hour', methods=['POST'])
+@api.route('/update-hour', methods=['PATCH'])
 def update_hour():
     """
     input:
@@ -79,17 +120,29 @@ def update_hour():
     "hour" : str
     }
     """
+
     data : dict = request.json
     issuer_id = data.get("issuer_id")
     object_suffix = data.get("object_suffix")
     new_hour = data.get("hour")
 
-    response = pass_builder.update_hour(issuer_id, object_suffix, new_hour)
 
-    return jsonify({"status": "Updated"})
+    #Check that all data is received
+    if None in [issuer_id, object_suffix, new_hour]:
+        print("Missing data")
+        return jsonify({'error: Missing data'}), 400
+    
+    try:
+        pass_builder.update_hour(issuer_id, object_suffix, new_hour)
+    except Exception as e:
+        error_message = e.args[0]
+        print(error_message)
+        return jsonify({'error': error_message}), 500
+
+    return jsonify({"status": "Updated hour"})
 
 
-@api.route('/update-status', methods=['POST'])
+@api.route('/update-status', methods=['PATCH'])
 def update_status():
     """
     input:
@@ -105,6 +158,16 @@ def update_status():
     object_suffix = data.get("object_suffix")
     new_status = data.get("status")
 
-    response = pass_builder.update_status(issuer_id, object_suffix, new_status)
+    #Check that all data is received
+    if None in [issuer_id, object_suffix, new_status]:
+        print("Missing data")
+        return jsonify({'error: Missing data'}), 400
 
-    return jsonify({"status": "Updated"})
+    try:
+        pass_builder.update_status(issuer_id, object_suffix, new_status)
+    except Exception as e:
+        error_message = e.args[0]
+        print(error_message)
+        return jsonify({'error': error_message}), 500
+
+    return jsonify({"status": "Updated status"})

@@ -56,11 +56,9 @@ class Pass:
         except HttpError as e:
             if e.status_code != 404:
                 # Something else went wrong...
-                print(e.error_details)
-                return f'{issuer_id}.{class_suffix}'
+                raise Exception(f"{e.error_details}")
         else:
-            print(f'Class {issuer_id}.{class_suffix} already exists!')
-            return f'{issuer_id}.{class_suffix}'
+            raise Exception(f'Class {issuer_id}.{class_suffix} already exists!')
 
         new_class = {
                     "id": f'{issuer_id}.{class_suffix}',
@@ -175,12 +173,10 @@ class Pass:
             response = self.client.genericclass().get(resourceId=f'{issuer_id}.{class_suffix}').execute()
         except HttpError as e:
             if e.status_code == 404:
-                print(f'Class {issuer_id}.{class_suffix} not found!')
-                return f'{issuer_id}.{class_suffix}'
+                raise Exception(f'Class {issuer_id}.{class_suffix} not found!')
             else:
                 # Something else went wrong...
-                print(e.error_details)
-                return f'{issuer_id}.{class_suffix}'
+                raise Exception(f"{e.error_details}")
         # There is no 'else' statement - that means that the class HAS to exist in order to patch it!!
 
         # Class exists
@@ -238,11 +234,9 @@ class Pass:
         except HttpError as e:
             if e.status_code != 404:
                 # Something else went wrong...
-                print(e.error_details)
-                return f'{issuer_id}.{object_suffix}'
+                raise Exception(f'{e.error_details}')
         else:
-            print(f'Object {issuer_id}.{object_suffix} already exists!')
-            return f'{issuer_id}.{object_suffix}'
+            raise Exception(f'Object {issuer_id}.{object_suffix} already exists!')
 
         new_object = {
                         "id": f"{issuer_id}.{object_suffix}",
@@ -381,12 +375,10 @@ class Pass:
             response = self.client.genericobject().get(resourceId=f'{issuer_id}.{object_suffix}').execute()
         except HttpError as e:
             if e.status_code == 404:
-                print(f'Object {issuer_id}.{object_suffix} not found!')
-                return f'{issuer_id}.{object_suffix}'
+                raise Exception(f'Object {issuer_id}.{object_suffix} not found!')
             else:
                 # Something else went wrong...
-                print(e.error_details)
-                return f'{issuer_id}.{object_suffix}'
+                raise Exception(f'{e.error_details}')
         # There is no 'else' statement - that means that the class HAS to exist in order to patch it!!
 
         # Object exists
@@ -590,12 +582,10 @@ class Pass:
             response = self.client.genericobject().get(resourceId=f'{issuer_id}.{object_suffix}').execute()
         except HttpError as e:
             if e.status_code == 404:
-                print(f'Object {issuer_id}.{object_suffix} not found!')
-                return f'{issuer_id}.{object_suffix}'
+                raise Exception(f'Object {issuer_id}.{object_suffix} not found!')
             else:
                 # Something else went wrong...
-                print(e.error_details)
-                return f'{issuer_id}.{object_suffix}'
+                return Exception(f'{e.error_details}')
 
         response = self.client.genericobject().addmessage(
             resourceId=f'{issuer_id}.{object_suffix}',
