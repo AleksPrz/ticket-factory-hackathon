@@ -184,6 +184,7 @@ class Pass:
                         "id": f"{issuer_id}.{object_suffix}",
                         "classId": f"{issuer_id}.{class_suffix}",
                         "enableNotification": True,
+                        "state": "ACTIVE",
                         "logo": {
                             "sourceUri": {
                             "uri": "https://res.cloudinary.com/dlrmqdoyf/image/upload/v1711679336/Marca_600_150_1_kgrfq0.png"

@@ -3,7 +3,7 @@ import requests
 localhost = "http://127.0.0.1"
 
 issuer = "3388000000022334672"
-class_suffix = "hackathonclase"
+class_suffix = "test"
 object_suffix = "hackatonobjeto1"
 
 
@@ -23,8 +23,8 @@ data = {"issuer_id": issuer, "class_suffix": class_suffix, "object_suffix": obje
 
 class_data = {"issuer_id": issuer, "class_suffix": class_suffix}
 
-#response = requests.post(f"{localhost}:5003/create-class", json = class_data)
-response = requests.post(f"{localhost}:5003/create-pass", json = data)
+response = requests.post(f"{localhost}:5000/api/create-class", json = class_data)
+#response = requests.post(f"{localhost}:5003/create-pass", json = data)
 
 print(response.text)
 print(response.json())

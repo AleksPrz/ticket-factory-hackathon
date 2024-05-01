@@ -11,7 +11,7 @@
         <div id="circle"></div>
         <img src="{{ url_for('static', filename = 'web_ticket/logo.png') }}" id="logo" alt="Logo de flecha amarilla">
         <p>{{ ticket.passenger_name }}</p>
-        <p>Categoria: {{ ticket.category }}</p>
+        <p>Categoría: {{ ticket.category }}</p>
         <div class="inline">
             <div id="origin">
                 <p class="subtitle">origen:</p>
@@ -42,15 +42,14 @@
         <p id="status">{{ ticket.status }}</p><br>
         <img src="{{ ticket.qr_url }}" alt="qr" id="qr">
         <p>Servicio: {{ ticket.service_number }}</p>
+        <p>Operación: {{ ticket.operation_number }}</p>
         <p>Total: $ {{ ticket.total_payment }}</p>
-        <p>Metodo de pago: {{ ticket.payment_method }}</p>
-        <p>Operacion: {{ ticket.operation_number }}</p>
-        <p>Token: {{ ticket.billing_token }}</p>
-        <a href="{{ ticket.wallet_url }}" target="_blank"><img src="{{ url_for('static', filename = 'web_ticket/esES_add_to_google_wallet_add-wallet-badge.svg') }}" class="wallet"></a>
-        <a href=""><img src="{{ url_for('static', filename = 'web_ticket/ESMX_Add_to_Apple_Wallet_RGB_101821.svg') }}" class="wallet"></a>
+        <p>Método de pago: {{ ticket.payment_method }}</p>
+        <p>Token de facturación: {{ ticket.billing_token }}</p>
+        <a href="{{ ticket.wallet_url }}" target="_blank"><img src="{{ url_for('static', filename = 'web_ticket/esES_add_to_google_wallet_add-wallet-badge.svg') }}" id="wallet"></a>
         <br>
-        <p class="small">En caso de tener algun problema, comunicate al numero (+52) 123 456 78 90</p>
-        <p class="small">Consulte el siguiente link para ver <a href="https://info.primeraplus.com.mx/terminos-y-condiciones/" target="_blank">terminos y condiciones</a></p>
+        <p class="small">En caso de tener algun problema, comunícate al numero (+52) 123 456 78 90</p>
+        <p class="small">Consulte el siguiente link para ver <a href="https://www.google.com/" target="_blank">terminos y condiciones</a></p>
     </div>
     <script src = "{{ url_for('static', filename = 'web_ticket/main.js') }}"></script>
     <script>
