@@ -187,7 +187,7 @@ class Pass:
                         "state": "ACTIVE",
                         "logo": {
                             "sourceUri": {
-                            "uri": "https://res.cloudinary.com/dlrmqdoyf/image/upload/v1711679336/Marca_600_150_1_kgrfq0.png"
+                            "uri": "https://res.cloudinary.com/dlrmqdoyf/image/upload/v1714535262/logo-factory_hhvfal.png"
                             },
                             "contentDescription": {
                             "defaultValue": {
